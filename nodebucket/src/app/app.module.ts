@@ -13,13 +13,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { MatCardModule } from '@angular/material/card';
+//Import statements MatFormFieldModule, MatInputModule, MatListModule, FormsModule, MatSelectModule
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     BaseLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +41,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

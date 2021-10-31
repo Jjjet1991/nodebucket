@@ -4,7 +4,7 @@
 const express = require('express');
 const http = require('http');
 const morgan = require('morgan');
-const bodyParser = require('body-parser');                        
+const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 
@@ -23,8 +23,8 @@ app.use('/', express.static(path.join(__dirname, '../dist/nodebucket')));
  */
 const port = 3000; // server port
 
-// TODO: This line will need to be replaced with your actual database connection string
-const conn = 'mongodb+srv://superadmin:s3cret@cluster0-lujih.mongodb.net/nodebucket?retryWrites=true&w=majority';
+// Connect to MongoDB Database: nodebucket
+const conn = 'mongodb+srv://admin:topsecret@cluster0.cs04f.mongodb.net/nodebucket?retryWrites=true&w=majority';
 
 /**
  * Database connection
@@ -42,6 +42,31 @@ mongoose.connect(conn, {
 /**
  * API(s) go here...
  */
+app.get('/api/employees/:empId', async(req, res) =>{
+  //Try, Catch block.
+  try {
+    //findOne 'empId' from req params.
+    Employee.findOne({ 'empId': req.params.empId}, function(err, employee) {
+      //If error log status 500 and send error message.
+      if (err) {
+        console.log(err);
+        res.status(500).send({
+          'message': 'Internal server error!'
+        })
+        //It emp ID is successful console log the employee, return employee json info.
+      } else {
+        console.log(employee);
+        res.json(employee)
+      }
+    })
+    //Catch error, return error message.
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({
+      'message': 'Internal server error!'
+    })
+  }
+});
 
 /**
  * Create and start server
