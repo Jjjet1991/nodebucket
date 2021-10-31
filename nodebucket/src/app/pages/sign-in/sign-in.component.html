@@ -1,20 +1,31 @@
+<!--
+  =====================================================
+  ; Title: Web 450 nodebucket
+  ; Author: Professor Krasso
+  ; Date 31 October 2021
+  ; Modified By: Jourdan Neal
+  ; Description: Sprint 1 - application to sign in by employee ID, connect to MongoDB database.
+  =====================================================
+  */-->
+
 <div fxLayout= "column">
-  <div fxFlex *ngIf="error">
+  <div fxFlex *ngIf="error" class="message-error">
     {{ error }}
   </div>
-
-  <mat-card fxFlex>
+<!--Card for sign in Page-->
+  <mat-card fxFlex class="sign-in-container">
     <mat-card-title>
       Employee Sign-in Page
     </mat-card-title>
-
+<!--Must enter valid id for button to enable button.-->
     <mat-card-subtitle>
       You must enter a valid employee ID to proceed
     </mat-card-subtitle>
-
+<!--Submit button to run login()-->
     <form [formGroup]="form" (ngSubmit)="login(); form.reset();">
       <mat-card-content>
         <mat-form-field>
+          <!--EmpId input field-->
           <input matInput
           [formControl]="form.controls['empId']"
           placeholder="Employee ID" />
@@ -22,6 +33,7 @@
       </mat-card-content>
 
       <mat-card-actions algin="end">
+        <!--Sign-in button invalid if empId is invalid.-->
         <button type="submit" fxFlex mat-raised-button color="primary" [disabled]="!form.valid">Sign-in</button>
       </mat-card-actions>
     </form>

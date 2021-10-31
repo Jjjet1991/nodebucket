@@ -1,3 +1,12 @@
+/*<!--
+=====================================================
+; Title: Web 450 nodebucket
+; Author: Professor Krasso
+; Date 31 October 2021
+; Modified By: Jourdan Neal
+; Description: Sprint 1 - application to sign in by employee ID, connect to MongoDB database.
+=====================================================
+*/
 /**
  * Require statements
  */
@@ -7,6 +16,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
+const employee = require('../src/app/models/employee');
 
 /**
  * App configurations
@@ -42,32 +52,26 @@ mongoose.connect(conn, {
 /**
  * API(s) go here...
  */
-app.get('/api/employees/:empId', async(req, res) =>{
-  //Try, Catch block.
+app.get('/api/employees/:empId', async(req, res) => {
   try {
-    //findOne 'empId' from req params.
-    Employee.findOne({ 'empId': req.params.empId}, function(err, employee) {
-      //If error log status 500 and send error message.
+    employee.findOne({ 'empId': req.params.empId}, function(err, employee) {
       if (err) {
         console.log(err);
         res.status(500).send({
           'message': 'Internal server error!'
         })
-        //It emp ID is successful console log the employee, return employee json info.
       } else {
         console.log(employee);
-        res.json(employee)
+        res.json(employee);
       }
     })
-    //Catch error, return error message.
-  } catch (e) {
+  } catch(e) {
     console.log(e);
     res.status(500).send({
-      'message': 'Internal server error!'
+      'message':'Internal server error!'
     })
   }
 });
-
 /**
  * Create and start server
  */

@@ -1,3 +1,13 @@
+/*<!--
+=====================================================
+; Title: Web 450 nodebucket
+; Author: Professor Krasso
+; Date 31 October 2021
+; Modified By: Jourdan Neal
+; Description: Sprint 1 - application to sign in by employee ID, connect to MongoDB database.
+=====================================================
+*/
+
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
 import 'zone.js/dist/zone-testing';
