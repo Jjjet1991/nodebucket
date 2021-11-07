@@ -30,6 +30,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { CookieService } from 'ngx-cookie-service';
+//Import statements ContactComponent, MatMenuModule, MatDivide Module
+import { ContactComponent } from './pages/contact/contact.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { TaskDialogueComponent } from './shared/task-dialogue/task-dialogue.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -38,7 +44,9 @@ import { CookieService } from 'ngx-cookie-service';
     HomeComponent,
     BaseLayoutComponent,
     AuthLayoutComponent,
-    SignInComponent
+    SignInComponent,
+    ContactComponent,
+    TaskDialogueComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +63,9 @@ import { CookieService } from 'ngx-cookie-service';
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

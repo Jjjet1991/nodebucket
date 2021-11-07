@@ -1,17 +1,76 @@
-<!--
-  =====================================================
-  ; Title: Web 450 nodebucket
-  ; Author: Professor Krasso
-  ; Date 31 October 2021
-  ; Modified By: Jourdan Neal
-  ; Description: Sprint 1 - application to sign in by employee ID, connect to MongoDB database.
-  =====================================================
-  */-->
 <div fxLayout="column" class="main-welcome">
-    <h1 class="title">
-      Welcome to WEB 450's - nodebucket Project <br />
-      <span class="subtitle">
-        Pay close attention to the requirements, double and triple check the files for code attribution, and do not wait unitl the last minute to begin working on each item.
-      </span>
-    </h1>
+  <h1 class="title">
+    Welcome to WEB 450's - nodebucket Project <br />
+    <span class="subtitle">
+      Pay close attention to the requirements, double and triple check the files for code attribution, and do not wait unitl the last minute to begin working on each item.
+    </span>
+  </h1>
+</div>
+
+
+<!------Create Task Button----------->
+<div class="create-container">
+
+  <div fxFlex>
+
+    <div fxLayout="column">
+      <button mat-flat-button class="create-button" (click)="openTaskDialogue()">Create Task            +</button>
+    </div>
+
+  </div>
+
+</div>
+<!----------------->
+
+<!--Container for both columns-->
+<div class="create-container">
+
+  <div fxFlex >
+    <mat-card class="todo-column mat-elevation-z5" fxLayout="column">
+      <!--Card title for column-->
+      <mat-card-title align="center">ToDo  <br><mat-icon>list_alt</mat-icon></mat-card-title>
+      <br>
+
+      <mat-card-content>
+        <div class="task-column">
+          <!--NgFor loop-->
+          <div *ngFor="let item of todo">
+            <!--Task card, adding row for each new task item.-->
+            <mat-card class="mat-elevation-z1 task-card">
+              <mat-card-content>
+                <div fxLayout="row">
+                  <div fxFlex class="tasks"> {{ item.text }} </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+<!---Done Column-->
+  <div fxFlex>
+    <mat-card class="done-column mat-elevation-z5"  fxLayout="column">
+      <!--Card title for Done column-->
+      <mat-card-title align="center">Done <br><mat-icon>done</mat-icon></mat-card-title>
+
+      <br>
+
+      <mat-card-content>
+        <div class="task-column">
+          <!--NgFor loop-->
+          <div *ngFor="let item of done">
+            <!--Task card, adding row for each new task item.-->
+            <mat-card class="mat-elevation-z1 task-card">
+              <mat-card-content>
+                <div fxLayout="row">
+                  <div fxFlex> {{ item.text }}</div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>

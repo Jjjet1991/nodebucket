@@ -1,10 +1,10 @@
-/*<!--
+/*
 =====================================================
 ; Title: Web 450 nodebucket
 ; Author: Professor Krasso
-; Date 31 October 2021
+; Date 7 November 2021
 ; Modified By: Jourdan Neal
-; Description: Sprint 1 - application to sign in by employee ID, connect to MongoDB database.
+; Description: Sprint 2 - application to sign in by employee ID, connect to MongoDB database.
 =====================================================
 */
 /**
@@ -17,6 +17,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 const employee = require('../src/app/models/employee');
+
+
 
 /**
  * App configurations
@@ -72,6 +74,77 @@ app.get('/api/employees/:empId', async(req, res) => {
     })
   }
 });
+
+//findAllTasks API
+app.get('/api/employees/:empId/tasks', async(req, res) => {
+  try {
+    //FindOne from params: empId, and respond with the empId, todo, and done portion of the Employee model.
+    employee.findOne({'empId': req.params.empId}, 'empId todo done', function(err, employee) {
+      if (err) {
+        console.log(err);
+        res.status(500).send({
+          'message': 'Internal server error!'
+        })
+      } else {
+        console.log(employee);
+        res.json(employee);
+      }
+    })
+  } catch(e) {
+    console.log(e);
+    res.status(500).send({
+      'message': 'Internal server error!'
+    })
+  }
+});
+//-----------------------------------------------------------//
+
+//createTask API
+app.post('/api/employees/:empId/tasks', async(req,res) => {
+  try {
+    employee.findOne({'empId': req.params.empId}, function(err, employee) {
+      //If error return status 500 with Internal server error message.
+      if (err) {
+        console.log(err);
+        res.status(500).send({
+          'message' : 'Internal server error!'
+        })
+      }
+      else {
+        console.log(employee);
+
+        //create newItem variable
+        const newItem = {
+          //Reference the text variable in the item module.
+          text: req.body.text
+        }
+
+        //Push the newItem to the employee todo
+        employee.todo.push(newItem);
+
+        //Save updatedEmployee with the newItem variable that was added above.
+        employee.save(function(err, updatedEmployee) {
+          if (err) {
+            console.log(err);
+            res.status(500).send ({
+              'message' : 'Internal server error!'
+            })
+          } else {
+            console.log(updatedEmployee);
+            res.json(updatedEmployee);
+          }
+        })
+      }
+    })
+  } catch(e){
+    console.log(e);
+    res.status(500). send({
+      'message': 'Internal server error!'
+    })
+  }
+});
+
+//-----------------------------------------------------------//
 /**
  * Create and start server
  */

@@ -15,6 +15,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { AuthGuard } from './auth.guard';
 import { AuthLayoutComponent } from './shared/auth-layout/auth-layout.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,12 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
+        canActivate: [AuthGuard]
+      },
+      //Path for Contact Component
+      {
+        path: 'contact',
+        component: ContactComponent,
         canActivate: [AuthGuard]
       }
     ]
