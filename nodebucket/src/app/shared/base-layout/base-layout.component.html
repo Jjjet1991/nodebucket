@@ -1,12 +1,12 @@
-<!--
+<!--/*
 =====================================================
 ; Title: Web 450 nodebucket
 ; Author: Professor Krasso
-; Date 31 October 2021
+; Date 7 November 2021
 ; Modified By: Jourdan Neal
-; Description: Sprint 1 - application to sign in by employee ID, connect to MongoDB database.
+; Description: Sprint 2 - Creating Home Page and Contact Page. Create task and display tasks.
 =====================================================
--->
+*/-->
 
 <div fxLayout="column">
 
@@ -20,7 +20,29 @@
 
           <button class="navbar-link" routerLink="/" mat-button>Home</button>
           <button class="navbar-link" mat-button>About</button>
+          <!--Router link for Contact Page-->
           <button class="navbar-link" mat-button routerLink="/contact">Contact Us</button>
+        </div>
+        <!--menu to show isLoggedIn value and allow for sign-out-->
+        <div fxFlex></div>
+
+        <div *ngIf="isLoggedIn">
+
+          <button mat-icon-button [matMenuTriggerFor]= "profileMenu" aria-label="User profile menu">
+            <!--mat-icon for the profile Menu-->
+            <mat-icon>perm_identity</mat-icon>
+          </button>
+
+          <!--profile menu-->
+          <mat-menu #profileMenu>
+            <p style="padding:10px;">Signed in as {{ name }}</p>
+            <mat-divider></mat-divider>
+            <!--Button to signOut-->
+            <button mat-menu-item (click)="signOut()">
+              <mat-icon>logout</mat-icon>
+              <span>Sign out</span>
+            </button>
+          </mat-menu>
         </div>
 
       </mat-toolbar>
