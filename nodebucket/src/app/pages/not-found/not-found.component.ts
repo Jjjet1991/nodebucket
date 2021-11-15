@@ -8,3 +8,19 @@
 ; the columns and re-order the tasks within a column. Create About and 404 Not Found Page.
 =====================================================
 */
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-not-found',
+  templateUrl: './not-found.component.html',
+  styleUrls: ['./not-found.component.css']
+})
+export class NotFoundComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}

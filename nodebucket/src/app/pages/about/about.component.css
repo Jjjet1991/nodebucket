@@ -17,7 +17,10 @@
 
 /*Font-size*/
 p {
-  font-size: 25px;
+  font-size: 17px;
+  line-height: 25px;
+  padding: 10px;
+  text-align: justify;
 }
 
 /*mat-icon size and color*/
@@ -37,6 +40,15 @@ p {
 }
 /*Border behind card*/
 .mat-card {
-  box-shadow: 60px -16px rgb(37, 150, 190);
+  box-shadow: 60px 16px rgb(37, 150, 190);
   border: 1px solid black;
+}
+
+/*mat-icon size and color*/
+.mat-icon {
+  font-size: 100px;
+  height: 100px ;
+  width: 100px;
+  color: black;
+  margin-left:500px;
 }

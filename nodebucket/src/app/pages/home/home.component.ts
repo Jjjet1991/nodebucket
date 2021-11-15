@@ -2,9 +2,10 @@
 =====================================================
 ; Title: Web 450 nodebucket
 ; Author: Professor Krasso
-; Date 7 November 2021
+; Date 14 November 2021
 ; Modified By: Jourdan Neal
-; Description: Sprint 2 - Creating Home Page and Contact Page. Create task and display tasks.
+; Description: Sprint 3 - Delete Task, Update Task. Drag and Drop function to move tasks between
+; the columns and re-order the tasks within a column. Create About and 404 Not Found Page.
 =====================================================
 */
 
@@ -15,6 +16,7 @@ import { TaskService } from 'src/app/task.service';
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDialogueComponent } from 'src/app/shared/task-dialogue/task-dialogue.component';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +24,7 @@ import { TaskDialogueComponent } from 'src/app/shared/task-dialogue/task-dialogu
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
   //Create employee, todo, done and empId variables.
   employee: Employee;
   todo: Item[];
@@ -59,6 +62,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //Open Dialog when Task is created
   openTaskDialogue() {
     const dialogRef = this.dialog.open(TaskDialogueComponent, {
       disableClose: true
@@ -76,5 +80,62 @@ export class HomeComponent implements OnInit {
         })
       }
     })
+  }
+
+    //Function to updated task lists.
+updateTaskList(empId:number, todo:Item[], done:Item[]): void {
+  this.taskService.updateTask(empId, todo, done).subscribe( res => {
+    this.employee = res.data;
+  }, err => {
+    console.log(err)
+  }, () => {
+    this.todo = this.employee.todo;
+    this.done = this.employee.done;
+  })
+}
+
+
+  //Event for drag and drop
+  drop(event: CdkDragDrop<any[]>) {
+
+    //Move items within a container.
+    if(event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      console.log('Reorder list of task items');
+
+      this.updateTaskList(this.empId, this.todo, this.done);
+
+      //Move tasks from one container to another.
+    } else {
+      transferArrayItem( event.previousContainer.data,
+                          event.container.data,
+                          event.previousIndex,
+                           event.currentIndex);
+
+      console.log('Items moved.');
+
+      this.updateTaskList(this.empId, this.todo, this.done);
+    }
+  }
+
+  //Delete Tasks
+  deleteTask( taskId: String) {
+    //Confirm if the user wants to delete the selected task
+    if(confirm('Are you sure you want to delete this task?')) {
+      if(taskId) {
+        //Logging that task was deleted
+        console.log(`Task Id ${taskId} was deleted.`);
+        //Subscribe to changes is employee todo and done to return updated todo and done data.
+        this.taskService.deleteTask(this.empId, taskId).subscribe(res => {
+          this.employee = res.data;
+        }, err => {
+          console.log(err)
+        }, () => {
+          this.todo = this.employee.todo;
+          this.done = this.employee.done;
+        })
+      }
+    }
+
   }
 }

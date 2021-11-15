@@ -2,9 +2,10 @@
 =====================================================
 ; Title: Web 450 nodebucket
 ; Author: Professor Krasso
-; Date 7 November 2021
+; Date 14 November 2021
 ; Modified By: Jourdan Neal
-; Description: Sprint 2 - Creating Home Page and Contact Page. Create task and display tasks.
+; Description: Sprint 3 - Delete Task, Update Task. Drag and Drop function to move tasks between
+; the columns and re-order the tasks within a column. Create About and 404 Not Found Page.
 =====================================================
 */
 
@@ -16,6 +17,8 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { AuthGuard } from './auth.guard';
 import { AuthLayoutComponent } from './shared/auth-layout/auth-layout.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { AboutComponent } from './pages/about/about.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -38,6 +41,12 @@ const routes: Routes = [
         path: 'contact',
         component: ContactComponent,
         canActivate: [AuthGuard]
+      },
+      //Path for About Component
+      {
+        path: 'about',
+        component: AboutComponent,
+        canActivate: [AuthGuard]
       }
     ]
   },
@@ -49,9 +58,19 @@ const routes: Routes = [
      {
        path: 'signin',
        component: SignInComponent
-     }
+     },
+     //Not-found path
+     {
+      path: 'not-found',
+      component: NotFoundComponent
+    }
    ]
- }
+ },
+ //Redirect to sessions/not-found.
+{
+  path: '**',
+  redirectTo: 'sessions/not-found'
+}
 ];
 
 @NgModule({

@@ -21,22 +21,34 @@ p {
 }
 
 /*mat-icon size and color*/
-.mat-icon {
-  font-size: 50px;
-  height: 50px ;
-  width: 50px;
-  color: black;
+.material-icons {
+  font-size: 100px;
+  height: 100px ;
+  width: 100px;
+  color: rgb(37, 150, 190);
   margin: 30px;
 }
 
 /**mat-card-title*/
 .mat-card-title {
-  font-size: 35px;
+  font-size: 55px;
   padding: 15px;
-  text-decoration: underline;
+  text-decoration: none;
 }
 /*Border behind card*/
 .mat-card {
   box-shadow: 60px -16px rgb(37, 150, 190);
   border: 1px solid black;
+  text-align: center;
+}
+
+h3 {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+button {
+  margin: 10px;
+  font-size: 20px;
+  padding: 15px;
 }

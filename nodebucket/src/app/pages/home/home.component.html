@@ -2,9 +2,10 @@
 =====================================================
 ; Title: Web 450 nodebucket
 ; Author: Professor Krasso
-; Date 7 November 2021
+; Date 14 November 2021
 ; Modified By: Jourdan Neal
-; Description: Sprint 2 - Creating Home Page and Contact Page. Create task and display tasks.
+; Description: Sprint 3 - Delete Task, Update Task. Drag and Drop function to move tasks between
+; the columns and re-order the tasks within a column. Create About and 404 Not Found Page.
 =====================================================
 */-->
 
@@ -33,7 +34,7 @@
 <!----------------->
 
 <!--Container for both columns-->
-<div class="create-container">
+<div class="create-container" cdkDropListGroup>
 
   <div fxFlex >
     <mat-card class="todo-column mat-elevation-z5" fxLayout="column">
@@ -42,14 +43,30 @@
       <br>
 
       <mat-card-content>
-        <div class="task-column">
+        <div
+        fxLayout="column"
+        fxLayoutGap="10px"
+        class="task-column"
+        cdkDropList
+        #todoList="cdkDropList"
+        [cdkDropListData]="todo"
+        [cdkDropListConnectedTo]="[doneList]"
+        (cdkDropListDropped)="drop($event)"
+        >
           <!--NgFor loop-->
-          <div *ngFor="let item of todo">
+          <div *ngFor="let item of todo" cdkDrag>
             <!--Task card, adding row for each new task item.-->
             <mat-card class="mat-elevation-z1 task-card">
               <mat-card-content>
                 <div fxLayout="row">
                   <div fxFlex class="tasks"> {{ item.text }} </div>
+                  <!--Trash can mat-icon that will delete task by taskId.-->
+                  <div fxFlex fxLayoutAlign="end">
+                    <button mat-icon-button (click)="deleteTask(item._id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                  <!---->
                 </div>
               </mat-card-content>
             </mat-card>
@@ -68,14 +85,27 @@
       <br>
 
       <mat-card-content>
-        <div class="task-column">
+        <div
+        class="task-column"
+        cdkDropList
+        #doneList="cdkDropList"
+        [cdkDropListData]="done"
+        [cdkDropListConnectedTo]="[todoList]"
+        (cdkDropListDropped)="drop($event)">
           <!--NgFor loop-->
-          <div *ngFor="let item of done">
+          <div *ngFor="let item of done" cdkDrag>
             <!--Task card, adding row for each new task item.-->
             <mat-card class="mat-elevation-z1 task-card">
               <mat-card-content>
                 <div fxLayout="row">
                   <div fxFlex> {{ item.text }}</div>
+                  <!--Trash can mat-icon that will delete task by taskId.-->
+                  <div fxFlex fxLayoutAlign="end">
+                    <button mat-icon-button (click)="deleteTask(item._id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                  <!---->
                 </div>
               </mat-card-content>
             </mat-card>

@@ -2,9 +2,10 @@
 =====================================================
 ; Title: Web 450 nodebucket
 ; Author: Professor Krasso
-; Date 7 November 2021
+; Date 14 November 2021
 ; Modified By: Jourdan Neal
-; Description: Sprint 2 - Creating Home Page and Contact Page. Create task and display tasks.
+; Description: Sprint 3 - Delete Task, Update Task. Drag and Drop function to move tasks between
+; the columns and re-order the tasks within a column. Create About and 404 Not Found Page.
 =====================================================
 */
 
@@ -36,7 +37,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { TaskDialogueComponent } from './shared/task-dialogue/task-dialogue.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
+//Import Drag and Drop Module, Not Found Component, About Component
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AboutComponent } from './pages/about/about.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     AuthLayoutComponent,
     SignInComponent,
     ContactComponent,
-    TaskDialogueComponent
+    TaskDialogueComponent,
+    AboutComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +72,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatMenuModule,
     MatDividerModule,
     MatDialogModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
