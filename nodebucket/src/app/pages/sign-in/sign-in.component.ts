@@ -38,7 +38,7 @@ export class SignInComponent implements OnInit {
   }
 
   //Create login function
-  login(){
+  login() : void {
     const empId = this.form.controls['empId'].value;
     //Checks for numerical value entered
 
@@ -46,6 +46,8 @@ export class SignInComponent implements OnInit {
       {
         if (res)
         {
+          console.log(res);
+          sessionStorage.setItem('name', `${res['firstName']} ${res['lastName']}`);
           //If value is entered navigates to HomeComponent
           this.cookieService.set('session_user', empId, 1);
           this.router.navigate(['/']);
