@@ -32,10 +32,11 @@ export class TaskService {
   }
 
   //updateTask function.
-  updateTask(empId: number, todo: Item[], done: Item[]): Observable<any> {
+  updateTask(empId: number, todo: Item[], done: Item[], doing: Item[]): Observable<any> {
     return this.http.put('/api/employees/' + empId + '/tasks', {
       todo,
-      done
+      done,
+      doing
     })
   }
 

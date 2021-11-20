@@ -85,7 +85,7 @@ app.get('/api/employees/:empId', async(req, res) => {
 app.get('/api/employees/:empId/tasks', async(req, res) => {
   try {
     //FindOne from params: empId, and respond with the empId, todo, and done portion of the Employee model.
-    Employee.findOne({'empId': req.params.empId}, 'empId todo done', function(err, employee) {
+    Employee.findOne({'empId': req.params.empId}, 'empId todo done doing', function(err, employee) {
       if (err) {
         console.log(err);
         res.status(500).send({
@@ -165,7 +165,8 @@ app.put('/api/employees/:empId/tasks', async(req,res) => {
 
         employee.set({
           todo: req.body.todo,
-          done: req.body.done
+          done: req.body.done,
+          doing: req.body.doing,
         });
 
         employee.save(function(err, updatedEmployee) {
@@ -197,75 +198,87 @@ app.put('/api/employees/:empId/tasks', async(req,res) => {
 app.delete('/api/employees/:empId/tasks/:taskId', async(req,res) => {
   //Try/catch bock
   try{
-    //Find one and delete task by taskId
-    Employee.findOne({'empId': req.params.empId}, function(err,employee) {
-      if(err){
-        console.log(err);
-        res.status(500).send({
-          'message':'Internal server error.'
-        })
-      } else {
-        //Create const todo Items, look at employee documents to find the taskId.
-        const todoItem = employee.todo.find(item => item._id.toString() === req.params.taskId);
-        //Looking for the same items by Id this time in done status.
-        const doneItem = employee.done.find(item => item._id.toString() === req.params.taskId);
+        //Find one and delete task by taskId
+        Employee.findOne({'empId': req.params.empId}, function(err,employee) {
+          if(err){
+            console.log(err);
+            res.status(500).send({
+              'message':'Internal server error.'
+            })
+          } else {
+            //Create const todo Items, look at employee documents to find the taskId.
+            const todoItem = employee.todo.find(item => item._id.toString() === req.params.taskId);
+            //Looking for the same items by Id this time in done status.
+            const doneItem = employee.done.find(item => item._id.toString() === req.params.taskId);
+            //Looking for the same items by Id this time in done status.
+            const doingItem = employee.doing.find(item => item._id.toString() === req.params.taskId);
 
-        //If the task Id is valid.
-        if (todoItem) {
-          //Remove the corresponding taskId.
-          employee.todo.id(todoItem._id).remove();
+    if (todoItem){
+      employee.todo.id(todoItem._id).remove();
 
-          //Save updated employee record after deleting task.
-          employee.save(function(err, updatedTodoItemEmployee) {
-            //If err, log err and respond w/ message.
-            if (err) {
-              console.log(err);
-              res.status(500).send ({
-                'message': 'Internal server error.'
-              })
-            } else {
-              console.log(updatedTodoItemEmployee);
-              res.status(200).send ({
-                'message': 'To Do Task deleted.'
-              })
-            }
-          })
-        } else if (doneItem) {
-          //If valid id in done status, remove.
-          employee.done.id(done._id).remove()
-
-          //Save updated employee record.
-          employee.save(function(err,updatedDoneItemEmployee) {
-            if (err) {
-              console.log(err);
-              res.status(500).send ({
-                'message': 'Internal server error.'
-              })
-            } else {
-              console.log(updatedDoneItemEmployee);
-              res.status(200).send ({
-                'message': 'Done Task Deleted'
-              })
-            }
+      employee.save(function(err, updatedToDoItemEmployee)
+      {
+        if(err) {
+          console.log(err);
+          res.status(500).send({
+            'message': 'Internal server error!'
           })
         } else {
-          console.log('Invalid Task Id:' + req.params.taskId);
-          res.status (300). send({
-            'message': 'Task not Found.'})
+          console.log(updatedToDoItemEmployee);
+          res.status(200).send({
+            'message': 'To Do task deleted.'
+          })
         }
+      })
+    } else if (doneItem) {
+      employee.done.id(doneItem._id).remove();
+
+      employee.save(function(err, updatedDoneEmployee)
+      {
+        if(err) {
+          console.log(err);
+          res.status(500).send({
+            'message': 'Internal server error.'
+          })
+        } else {
+          console.log(updatedDoneEmployee);
+          res.status(200).send({
+            'message':'Done task deleted.'
+          })
+        }
+      })
+    } else if (doingItem) {
+      employee.doing.id(doingItem._id).remove();
+
+      employee.save(function(err, updatedDoingEmployee)
+      {
+        if(err) {
+          console.log(err);
+          res.status(500).send({
+            'message': 'Internal server error.'
+          })
+        } else {
+          console.log(updatedDoingEmployee);
+          res.status(200).send({
+            'message': 'Doing task deleted.'
+          })
+        }
+      })
+    } else {
+      console.log('Invalid Task Id:' + req.params.taskId);
+      res.status(300).send({
+        'message': 'Task not found.'})
       }
-    })
-  }
-  catch(e){
-    console.log(e);
-    res.status(200).send({
-      'message':'Internal server error!'
-    })
-  }
+    }
+  })
+}
+catch(e){
+  console.log(e);
+  res.status(200).send({
+    'message':'Internal server error!'
+  })
+}
 })
-
-
-
 //----------------------------------------------//
 /**
  * Create and start server

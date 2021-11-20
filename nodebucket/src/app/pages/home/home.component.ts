@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
   employee: Employee;
   todo: Item[];
   done: Item[];
+  //Adding 'doing array'
+  doing: Item[];
   empId: number;
 
   constructor( private taskService: TaskService, private cookieService: CookieService, private dialog: MatDialog) {
@@ -49,6 +51,7 @@ export class HomeComponent implements OnInit {
     //Create todo and done variables for specified empId
     this.todo= this.employee.todo;
     this.done = this.employee.done;
+    this.doing = this.employee.doing;
 
     //Console log todo for empId and done for empId.
     console.log('--Todo tasks--');
@@ -56,6 +59,9 @@ export class HomeComponent implements OnInit {
 
     console.log('--Done tasks');
     console.log(this.done);
+
+    console.log('--Doing tasks--');
+    console.log(this.doing);
     })
    }
 
@@ -77,20 +83,22 @@ export class HomeComponent implements OnInit {
         }, () => {
           this.todo = this.employee.todo;
           this.done = this.employee.done;
+          this.doing = this.employee.doing;
         })
       }
     })
   }
 
     //Function to updated task lists.
-updateTaskList(empId:number, todo:Item[], done:Item[]): void {
-  this.taskService.updateTask(empId, todo, done).subscribe( res => {
+updateTaskList(empId:number, todo:Item[], done:Item[], doing:Item[]): void {
+  this.taskService.updateTask(empId, todo, done, doing).subscribe( res => {
     this.employee = res.data;
   }, err => {
     console.log(err)
   }, () => {
     this.todo = this.employee.todo;
     this.done = this.employee.done;
+    this.doing = this.employee.doing;
   })
 }
 
@@ -103,7 +111,7 @@ updateTaskList(empId:number, todo:Item[], done:Item[]): void {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       console.log('Reorder list of task items');
 
-      this.updateTaskList(this.empId, this.todo, this.done);
+      this.updateTaskList(this.empId, this.todo, this.done, this.doing);
 
       //Move tasks from one container to another.
     } else {
@@ -114,7 +122,7 @@ updateTaskList(empId:number, todo:Item[], done:Item[]): void {
 
       console.log('Items moved.');
 
-      this.updateTaskList(this.empId, this.todo, this.done);
+      this.updateTaskList(this.empId, this.todo, this.done, this.doing);
     }
   }
 
@@ -133,6 +141,7 @@ updateTaskList(empId:number, todo:Item[], done:Item[]): void {
         }, () => {
           this.todo = this.employee.todo;
           this.done = this.employee.done;
+          this.doing= this.employee.doing;
         })
       }
     }

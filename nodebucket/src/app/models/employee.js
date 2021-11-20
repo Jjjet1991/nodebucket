@@ -21,7 +21,9 @@ let employeeSchema = new Schema({
   lastName: {type: String},
   //Add to do and done ItemDocuments to employeeSchema
   todo: [ItemDocument],
-  done: [ItemDocument]
+  done: [ItemDocument],
+  //Adding doing to Employee Schema
+  doing: [ItemDocument]
   }, { collection: 'employees'})
 
   module.exports = mongoose.model('Employee', employeeSchema);

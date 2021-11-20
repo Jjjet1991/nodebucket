@@ -12,9 +12,10 @@
 ///Import Item interface
 import { Item } from "./item.interface";
 
-//Create Employee interface, empId, todo, done.
+//Create Employee interface, empId, todo, done, and doing;
 export interface Employee {
   empId : String;
   todo : Item[];
-  done: Item []
+  done: Item [];
+  doing: Item[];
 }
